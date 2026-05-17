@@ -107,10 +107,50 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  position: relative;
+  overflow: hidden;
 }
 
 .card.status-error { border-color: #f85149; }
 .card.status-loading { border-color: #58a6ff; }
+
+/* Time-of-day base palette (visible for clear/partly conditions) */
+.card.time-morning { background: linear-gradient(160deg, #3a5f8c 0%, #1f3a5f 100%); }
+.card.time-day     { background: linear-gradient(160deg, #2d5d8f 0%, #1a3a5e 100%); }
+.card.time-evening { background: linear-gradient(160deg, #6a3a5e 0%, #3a1f3a 100%); }
+.card.time-night   { background: linear-gradient(160deg, #1a1e4a 0%, #0a0e1f 100%); }
+
+/* Overcast/precipitation overrides — duller, greyer */
+.card.weather-cloudy { background: linear-gradient(160deg, #4a5562 0%, #2d3540 100%); }
+.card.weather-rainy  { background: linear-gradient(160deg, #2a3340 0%, #1c2530 100%); }
+.card.weather-snowy  { background: linear-gradient(160deg, #6b7785 0%, #4a5562 100%); }
+.card.weather-foggy  { background: linear-gradient(160deg, #585858 0%, #3a3a3a 100%); }
+.card.weather-stormy { background: linear-gradient(160deg, #2c2c44 0%, #14142a 100%); }
+
+/* Temperature accent — border only */
+.card.temp-cold     { border-color: #3b6ea5; }
+.card.temp-pleasant { border-color: #3fb950; }
+.card.temp-hot      { border-color: #f0883e; }
+
+/* Weather icon — emoji watermark in bottom-right */
+.card::after {
+  position: absolute;
+  bottom: 3rem;
+  right: 0.8rem;
+  font-size: 2.4rem;
+  opacity: 0.55;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+}
+.card.weather-clear.time-night::after  { content: '🌙'; }
+.card.weather-clear::after             { content: '☀️'; }
+.card.weather-partly.time-night::after { content: '☁️'; }
+.card.weather-partly::after            { content: '⛅'; }
+.card.weather-cloudy::after            { content: '☁️'; }
+.card.weather-rainy::after             { content: '🌧️'; }
+.card.weather-snowy::after             { content: '❄️'; }
+.card.weather-foggy::after             { content: '🌫️'; }
+.card.weather-stormy::after            { content: '⛈️'; }
 
 .card header {
   display: flex;
@@ -179,6 +219,13 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   color: #8b949e;
   font-size: 0.9rem;
   margin: 0;
+}
+
+.observed {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #b1bac4;
+  opacity: 0.85;
 }
 
 footer p {
